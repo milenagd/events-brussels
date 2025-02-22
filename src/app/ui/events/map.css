@@ -12,10 +12,10 @@
   }
   70% {
     -moz-box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
-     box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
   }
   100% {
     -moz-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-     box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
   }
 }

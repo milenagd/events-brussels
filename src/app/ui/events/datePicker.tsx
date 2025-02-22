@@ -1,10 +1,9 @@
-"use client"
+"use client";
 
 import { useState } from "react";
-import { format, parseISO, isValid } from "date-fns";
+import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
-
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -20,7 +19,9 @@ export function DatePickerDemo() {
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const initialDate = searchParams.get('date') ? new Date(searchParams.get('date')) : new Date();
+  const initialDate = searchParams.get("date")
+    ? new Date(searchParams.get("date"))
+    : new Date();
   const [selectedDate, setSelectedDate] = useState<Date>(initialDate);
 
   const handleDateChange = (date: Date) => {
@@ -28,7 +29,7 @@ export function DatePickerDemo() {
     params.set("date", date.toString());
     replace(`${pathname}?${params.toString()}`);
     setSelectedDate(date);
-  }
+  };
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -36,11 +37,15 @@ export function DatePickerDemo() {
           variant={"outline"}
           className={cn(
             "w-[280px] justify-start text-left font-normal",
-            !selectedDate && "text-muted-foreground"
+            !selectedDate && "text-muted-foreground",
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {selectedDate ? format(selectedDate, "PPP") : <span>Pick a date</span>}
+          {selectedDate ? (
+            format(selectedDate, "PPP")
+          ) : (
+            <span>Pick a date</span>
+          )}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
@@ -53,11 +58,11 @@ export function DatePickerDemo() {
           onMonthChange={setSelectedDate}
           disabled={(day: Date) => {
             const today = new Date();
-            today.setHours(0,0,0,0)
-            return day < today }
-          }
+            today.setHours(0, 0, 0, 0);
+            return day < today;
+          }}
         />
       </PopoverContent>
     </Popover>
-  )
+  );
 }

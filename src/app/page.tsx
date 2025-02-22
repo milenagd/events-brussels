@@ -11,7 +11,7 @@ export type QueryParamsType = {
   category?: string;
   isFree?: string;
   date?: string;
-}
+};
 export type HomeProps = {
   searchParams?: Promise<QueryParamsType>;
 };
@@ -25,7 +25,7 @@ export default async function Page(props: HomeProps) {
 
   const realData = await fetchEvents(date);
 
-  const filteredData = applyFilters(realData, {location, category, isFree});
+  const filteredData = applyFilters(realData, { location, category, isFree });
   const locations = realData.map((i) => ({
     id: i.id,
     lat: i.coordinates.lat,
@@ -51,11 +51,11 @@ export default async function Page(props: HomeProps) {
           </div>
         </div>
         <div className="w-full sm:w-1/2 p-4 overflow-y-auto h-screen">
-        <div className="space-y-4">
-          <Suspense key="list-of-cards" fallback={<h1>Loading...</h1>}>
-            <Cards data={filteredData} />
-          </Suspense>
-        </div>
+          <div className="space-y-4">
+            <Suspense key="list-of-cards" fallback={<h1>Loading...</h1>}>
+              <Cards data={filteredData} />
+            </Suspense>
+          </div>
         </div>
       </div>
     </div>

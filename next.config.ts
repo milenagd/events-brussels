@@ -6,8 +6,8 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "agendabrussels2.imgix.net",
-      }
-    ]
+      },
+    ],
   },
 };
 
