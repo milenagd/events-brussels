@@ -1,0 +1,78 @@
+"use client";
+
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import React from "react";
+import { DatePickerDemo } from "./datePicker";
+
+export default function Filters(props: { data: unknown[] }) {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+
+  const toggleIsFree = searchParams.get("isFree");
+  const selectedDate = searchParams.get("date");
+
+  
+  const handleFreeEventChange = (item: string) => {
+    const params = new URLSearchParams(searchParams);
+    if(toggleIsFree == 'true') {
+      params.set("isFree", 'false');
+    } else {
+      params.set("isFree", 'true');
+    }
+    replace(`${pathname}?${params.toString()}`);
+  };
+  const handleCategoryChange = (item: string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("category", item);
+    replace(`${pathname}?${params.toString()}`);
+  };
+  
+  
+  const categoryFiltered = new Set(
+    props.data.map((i) => i.category)
+  );
+  const defaultValue = searchParams.get("category") === null ? "" : searchParams.get("category")
+  return (
+    <div className="flex p-5 gap-5 items-center">
+      <div>
+      <p>When?</p>
+      <DatePickerDemo />
+      </div>
+      <div>
+        <p>Type?</p>
+      <Select
+        onValueChange={handleCategoryChange}
+        defaultValue={defaultValue}
+      >
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Select a category" />
+        </SelectTrigger>
+        <SelectContent>
+          {[...categoryFiltered].map((item) => (
+            <SelectItem value={item} key={item}>
+              {item}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+      </div>
+      <div>
+        <p>Budget?</p>
+      <div className="flex items-center space-x-2">
+        <Switch id="is-free" onCheckedChange={handleFreeEventChange} checked={toggleIsFree == 'true'} />
+        <Label htmlFor="is-free">Free events</Label>
+      </div>
+    </div>
+    </div>
+  );
+}
