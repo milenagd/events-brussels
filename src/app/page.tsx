@@ -4,7 +4,8 @@ import Cards from "./ui/events/cards";
 import Filters from "./ui/events/filters";
 import { applyFilters } from "./lib/filter";
 import { fetchEvents } from "./services/fetchEvents";
-import Map2 from "./ui/events/map";
+import MapEvents from "./ui/events/map";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export type QueryParamsType = {
   location?: string;
@@ -33,29 +34,30 @@ export default async function Page(props: HomeProps) {
     title: i.coordinates.title,
   }));
   return (
-    <div className="flex flex-col h-screen">
-      <header className="bg-gradient-to-r from-black via-yellow-400 to-red-600 text-white p-4 flex items-center justify-between shadow-lg">
-        <div className="flex items-center space-x-4">
-          <div className="text-2xl font-bold">What's up Brussels?</div>
-        </div>
+    <div className="h-screen flex flex-col">
+      <header className="bg-white p-4 shadow-md text-xl font-semibold">
+        What's up Brussels?
       </header>
-      <div className="p-4 flex-shrink-0">
-        {/* Filters Section */}
-        <h2 className="text-2xl font-semibold mb-4">Filters</h2>
-        <Filters data={filteredData} />
-      </div>
-      <div className="flex flex-1 mt-[300px]">
-        <div className="w-full sm:w-1/2 p-4">
-          <div className="relative rounded-xl border-8 border-black overflow-hidden w-full h-screen shadow-xl">
-            <Map2 locations={locations} />
-          </div>
-        </div>
-        <div className="w-full sm:w-1/2 p-4 overflow-y-auto h-screen">
-          <div className="space-y-4">
-            <Suspense key="list-of-cards" fallback={<h1>Loading...</h1>}>
-              <Cards data={filteredData} />
-            </Suspense>
-          </div>
+
+      <div className="flex flex-grow gap-4 p-4 flex-wrap md:flex-nowrap md:flex-row">
+        <aside className="w-full md:w-1/4 bg-gray-100 p-4 rounded-xl shadow-lg">
+          <Filters data={filteredData} />
+        </aside>
+
+        <div className="flex flex-col w-full ml:flex-row md:flex-grow">
+          <main className="w-full ml:w-1/2 h-80 ml:h-full bg-gray-200 rounded-xl shadow-lg overflow-hidden mb-4 md:mb-0">
+            <MapEvents locations={locations} />
+          </main>
+
+          <section className="w-full ml:w-1/2 bg-white p-4 rounded-xl shadow-lg overflow-y-auto h-full">
+            <div className="space-y-4">
+              <Suspense key="list-of-cards" fallback={<h1>Loading...</h1>}>
+                <ScrollArea className="h-[87vh]">
+                  <Cards data={filteredData} />
+                </ScrollArea>
+              </Suspense>
+            </div>
+          </section>
         </div>
       </div>
     </div>
