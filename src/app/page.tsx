@@ -39,7 +39,7 @@ export default async function Page(props: HomeProps) {
   return (
     <div className="h-screen flex flex-col">
       <header className="bg-white p-4 shadow-md text-xl font-semibold">
-        What's up Brussels?
+        {"What's up Brussels?"}
       </header>
 
       <div className="flex flex-grow gap-4 p-4 flex-wrap md:flex-nowrap md:flex-row">

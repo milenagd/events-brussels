@@ -20,19 +20,21 @@ export function DatePicker() {
   const { replace } = useRouter();
 
   const initialDate = searchParams.get("date")
-    ? new Date(searchParams.get("date"))
+    ? new Date(searchParams.get("date") as string)
     : new Date();
   const [selectedDate, setSelectedDate] = useState<Date>(initialDate);
 
-  const handleDateChange = (date: Date) => {
-    const params = new URLSearchParams(searchParams);
-    params.set("date", date.toString());
-    params.delete("category");
-    params.delete("isFree");
-    params.delete("location");
-    params.delete("page");
-    replace(`${pathname}?${params.toString()}`);
-    setSelectedDate(date);
+  const handleDateChange = (date: Date | undefined) => {
+    if (date) {
+      const params = new URLSearchParams(searchParams);
+      params.set("date", date.toString());
+      params.delete("category");
+      params.delete("isFree");
+      params.delete("location");
+      params.delete("page");
+      replace(`${pathname}?${params.toString()}`);
+      setSelectedDate(date);
+    }
   };
   return (
     <Popover>

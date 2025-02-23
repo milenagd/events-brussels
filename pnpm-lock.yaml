@@ -65,6 +65,9 @@ importers:
       "@eslint/eslintrc":
         specifier: ^3
         version: 3.2.0
+      "@types/leaflet":
+        specifier: ^1.9.16
+        version: 1.9.16
       "@types/node":
         specifier: ^20
         version: 20.17.19
@@ -999,6 +1002,12 @@ packages:
         integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==,
       }
 
+  "@types/geojson@7946.0.16":
+    resolution:
+      {
+        integrity: sha512-6C8nqWur3j98U6+lXDfTUWIfgvZU+EumvpHKcYjujKH7woYyLj2sUmff0tRhrqM7BohUw7Pz3ZB1jj2gW9Fvmg==,
+      }
+
   "@types/json-schema@7.0.15":
     resolution:
       {
@@ -1009,6 +1018,12 @@ packages:
     resolution:
       {
         integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==,
+      }
+
+  "@types/leaflet@1.9.16":
+    resolution:
+      {
+        integrity: sha512-wzZoyySUxkgMZ0ihJ7IaUIblG8Rdc8AbbZKLneyn+QjYsj5q1QU7TEKYqwTr10BGSzY5LI7tJk9Ifo+mEjdFRw==,
       }
 
   "@types/node@20.17.19":
@@ -4287,9 +4302,15 @@ snapshots:
 
   "@types/estree@1.0.6": {}
 
+  "@types/geojson@7946.0.16": {}
+
   "@types/json-schema@7.0.15": {}
 
   "@types/json5@0.0.29": {}
+
+  "@types/leaflet@1.9.16":
+    dependencies:
+      "@types/geojson": 7946.0.16
 
   "@types/node@20.17.19":
     dependencies:

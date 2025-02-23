@@ -46,9 +46,12 @@ export default function Filters(props: { data: EventType[] }) {
       </div>
       <div>
         <p className="text-lg font-semibold mb-4">Category</p>
-        <Select onValueChange={handleCategoryChange} value={categoryValue}>
+        <Select
+          onValueChange={handleCategoryChange}
+          value={categoryValue as string}
+        >
           <SelectTrigger className="w-[180px]">
-            <SelectValue value="" placeholder="Select a category" />
+            <SelectValue placeholder="Select a category" />
           </SelectTrigger>
           <SelectContent>
             {[...categoryFiltered].map((item) => (

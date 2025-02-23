@@ -46,7 +46,7 @@ export const fetchEvents = async ({
   headers.append("Accept", "application/json");
   headers.append("Authorization", `Bearer ${process.env.API_ACCESS_TOKEN}`);
 
-  var requestOptions = {
+  const requestOptions = {
     headers,
     method: "GET",
     redirect: "follow",
@@ -73,11 +73,13 @@ export const fetchEvents = async ({
   };
 };
 
-export const adaptEvents = (events: unknown[]): EventType[] => {
+export const adaptEvents = (events: any[]): EventType[] => {
   const newData = events.map((item) => {
-    const mediaItem = Array.isArray(item?.media)
-      ? item.media.find((i) => i.type === "photo")
-      : item.media;
+    const mediaItem = Object.keys(item).includes("media")
+      ? Array.isArray(item.media)
+        ? item.media.find((i: { type: string }) => i.type === "photo")
+        : item.media
+      : {};
     return {
       id: item.id,
       locationName: item?.place?.translations?.en?.name || "",
@@ -91,15 +93,20 @@ export const adaptEvents = (events: unknown[]): EventType[] => {
       },
       media: {
         link: mediaItem?.link || "",
-        title: mediaItem?.translations.en.title,
+        title: mediaItem?.translations.en.title || "unknown",
       },
       prices: item?.is_free
         ? []
         : Array.isArray(item.prices)
-          ? item.prices.map((price) => ({
-              type: price.translations.en.name,
-              value: price.value,
-            }))
+          ? item.prices.map(
+              (price: {
+                translations: { en: { name: string } };
+                value: number;
+              }) => ({
+                type: price.translations.en.name,
+                value: price.value,
+              }),
+            )
           : [],
       dateNext: item.date_next,
       agendaUrl: item.translations.en.agenda_url,

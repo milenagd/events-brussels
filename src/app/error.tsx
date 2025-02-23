@@ -1,9 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Error({
-  error,
   reset,
 }: {
   error: Error & { digest?: string };
@@ -12,7 +12,7 @@ export default function Error({
   return (
     <div className="h-screen flex flex-col">
       <header className="bg-white p-4 shadow-md text-xl font-semibold">
-        What's up Brussels?
+        {"What's up Brussels?"}
       </header>
 
       <main className="flex h-full flex-col items-center justify-center">
@@ -21,7 +21,7 @@ export default function Error({
           Try again
         </Button>
         <Button asChild>
-          <a href="/">Go back to home</a>
+          <Link href="/">Go back to home</Link>
         </Button>
       </main>
     </div>
