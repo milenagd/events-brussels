@@ -56,7 +56,7 @@ export default async function Page(props: HomeProps) {
             <div className="space-y-4">
               <CustomPagination pagination={pagination} />
               <Suspense key="list-of-cards" fallback={<h1>Loading...</h1>}>
-                <ScrollArea className="h-[87vh]">
+                <ScrollArea className="h-full ml:h-[87vh]">
                   <Cards data={filteredData} />
                 </ScrollArea>
               </Suspense>

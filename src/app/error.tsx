@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 
 export default function Error({
   reset,
@@ -21,7 +20,7 @@ export default function Error({
           Try again
         </Button>
         <Button asChild>
-          <Link href="/">Go back to home</Link>
+          <a href="/">Go back to home</a>
         </Button>
       </main>
     </div>
