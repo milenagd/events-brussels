@@ -35,8 +35,14 @@ export function CustomPagination(props: { pagination: PaginationType }) {
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
-            aria-disabled={props.pagination.page === 1}
             href={buildRoute(Math.max(props.pagination.page - 1, 1))}
+            aria-disabled={props.pagination.page === 1}
+            tabIndex={props.pagination.page === 1 ? -1 : 0}
+            className={
+              props.pagination.page === 1
+                ? "pointer-events-none opacity-50"
+                : undefined
+            }
           />
         </PaginationItem>
         {props.pagination.page > 1 && (
@@ -52,8 +58,14 @@ export function CustomPagination(props: { pagination: PaginationType }) {
         </PaginationItem>
         <PaginationItem>
           <PaginationNext
-            aria-disabled={props.pagination.page === totalPages}
             href={buildRoute(Math.min(props.pagination.page + 1, totalPages))}
+            aria-disabled={props.pagination.page === totalPages}
+            tabIndex={props.pagination.page === totalPages ? -1 : undefined}
+            className={
+              props.pagination.page === totalPages
+                ? "pointer-events-none opacity-50"
+                : undefined
+            }
           />
         </PaginationItem>
       </PaginationContent>

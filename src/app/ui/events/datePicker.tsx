@@ -27,6 +27,10 @@ export function DatePicker() {
   const handleDateChange = (date: Date) => {
     const params = new URLSearchParams(searchParams);
     params.set("date", date.toString());
+    params.delete("category");
+    params.delete("isFree");
+    params.delete("location");
+    params.delete("page");
     replace(`${pathname}?${params.toString()}`);
     setSelectedDate(date);
   };
