@@ -11,8 +11,9 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { DatePicker } from "./datePicker";
+import { EventType } from "@/app/services/fetchEvents";
 
-export default function Filters(props: { data: unknown[] }) {
+export default function Filters(props: { data: EventType[] }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -35,7 +36,7 @@ export default function Filters(props: { data: unknown[] }) {
   };
 
   const categoryFiltered = new Set(props.data.map((i) => i.category));
-  const defaultValue =
+  const categoryValue =
     searchParams.get("category") === null ? "" : searchParams.get("category");
   return (
     <div className="flex flex-col gap-10">
@@ -45,12 +46,9 @@ export default function Filters(props: { data: unknown[] }) {
       </div>
       <div>
         <p className="text-lg font-semibold mb-4">Category</p>
-        <Select
-          onValueChange={handleCategoryChange}
-          defaultValue={defaultValue}
-        >
+        <Select onValueChange={handleCategoryChange} value={categoryValue}>
           <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select a category" />
+            <SelectValue value="" placeholder="Select a category" />
           </SelectTrigger>
           <SelectContent>
             {[...categoryFiltered].map((item) => (

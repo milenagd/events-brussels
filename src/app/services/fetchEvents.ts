@@ -1,5 +1,10 @@
 import { format } from "date-fns";
 
+export type PaginationType = {
+  page: number;
+  pageCount: number;
+  resultCount: number;
+};
 export type EventType = {
   id: number;
   locationName: string;
@@ -25,7 +30,18 @@ export type EventType = {
   agendaUrl: string;
 };
 
-export const fetchEvents = async (date?: string): Promise<EventType[]> => {
+export type EventsResponse = {
+  data: EventType[];
+  pagination: PaginationType;
+};
+
+export const fetchEvents = async ({
+  date,
+  page,
+}: {
+  date?: string;
+  page?: string;
+}): Promise<EventsResponse> => {
   const headers = new Headers();
   headers.append("Accept", "application/json");
   headers.append("Authorization", `Bearer ${process.env.API_ACCESS_TOKEN}`);
@@ -36,16 +52,25 @@ export const fetchEvents = async (date?: string): Promise<EventType[]> => {
     redirect: "follow",
   } as RequestInit;
 
-  const newDate = date ? new Date(date) : new Date();
+  const dateSelected = date ? new Date(date) : new Date();
+  const pageSelected = page || "1";
   const res = await fetch(
-    `${process.env.API_URL}/date?date=${format(newDate, "yyyy-MM-dd")}`,
+    `${process.env.API_URL}/date?date=${format(dateSelected, "yyyy-MM-dd")}&page=${pageSelected}`,
     requestOptions,
   );
   if (!res.ok) {
     throw new Error("Failed to fetch events");
   }
   const resJson = await res.json();
-  return adaptEvents(resJson.response.results.event);
+  const eventData = adaptEvents(resJson.response.results.event);
+  return {
+    data: eventData,
+    pagination: {
+      page: resJson.response.page,
+      pageCount: resJson.response.pageCount,
+      resultCount: resJson.response.resultCount,
+    },
+  };
 };
 
 export const adaptEvents = (events: unknown[]): EventType[] => {

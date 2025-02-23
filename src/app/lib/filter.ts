@@ -13,7 +13,7 @@ export const applyFilters = (data: EventType[], filters: QueryParamsType) => {
     if (filters.category) {
       condition = condition && i.category === filters.category;
     }
-    if (filters.isFree) {
+    if (filters.isFree && filters.isFree === "true") {
       condition = condition && i.isFree.toString() == filters.isFree;
     }
     return condition;

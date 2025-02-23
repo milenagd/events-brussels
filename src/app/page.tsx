@@ -2,6 +2,7 @@ import { Suspense } from "react";
 
 import Cards from "./ui/events/cards";
 import Filters from "./ui/events/filters";
+import { CustomPagination } from "./ui/events/pagination";
 import { applyFilters } from "./lib/filter";
 import { fetchEvents } from "./services/fetchEvents";
 import MapEvents from "./ui/events/map";
@@ -12,6 +13,7 @@ export type QueryParamsType = {
   category?: string;
   isFree?: string;
   date?: string;
+  page?: string;
 };
 export type HomeProps = {
   searchParams?: Promise<QueryParamsType>;
@@ -23,11 +25,12 @@ export default async function Page(props: HomeProps) {
   const category = searchParams?.category || "";
   const isFree = searchParams?.isFree || "";
   const date = searchParams?.date || "";
+  const page = searchParams?.page || "1";
 
-  const realData = await fetchEvents(date);
+  const { data, pagination } = await fetchEvents({ date, page });
 
-  const filteredData = applyFilters(realData, { location, category, isFree });
-  const locations = realData.map((i) => ({
+  const filteredData = applyFilters(data, { location, category, isFree });
+  const locations = data.map((i) => ({
     id: i.id,
     lat: i.coordinates.lat,
     lon: i.coordinates.lon,
@@ -51,6 +54,7 @@ export default async function Page(props: HomeProps) {
 
           <section className="w-full ml:w-1/2 bg-white p-4 rounded-xl shadow-lg overflow-y-auto h-full">
             <div className="space-y-4">
+              <CustomPagination pagination={pagination} />
               <Suspense key="list-of-cards" fallback={<h1>Loading...</h1>}>
                 <ScrollArea className="h-[87vh]">
                   <Cards data={filteredData} />
