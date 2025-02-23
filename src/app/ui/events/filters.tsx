@@ -10,8 +10,7 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import React from "react";
-import { DatePickerDemo } from "./datePicker";
+import { DatePicker } from "./datePicker";
 
 export default function Filters(props: { data: unknown[] }) {
   const searchParams = useSearchParams();
@@ -39,13 +38,13 @@ export default function Filters(props: { data: unknown[] }) {
   const defaultValue =
     searchParams.get("category") === null ? "" : searchParams.get("category");
   return (
-    <div className="flex p-5 gap-5 items-center">
+    <div className="flex flex-col gap-10">
       <div>
-        <p>When?</p>
-        <DatePickerDemo />
+        <p className="text-lg font-semibold mb-4">When</p>
+        <DatePicker />
       </div>
       <div>
-        <p>Type?</p>
+        <p className="text-lg font-semibold mb-4">Category</p>
         <Select
           onValueChange={handleCategoryChange}
           defaultValue={defaultValue}
@@ -63,7 +62,7 @@ export default function Filters(props: { data: unknown[] }) {
         </Select>
       </div>
       <div>
-        <p>Budget?</p>
+        <p className="text-lg font-semibold mb-4">Budget</p>
         <div className="flex items-center space-x-2">
           <Switch
             id="is-free"

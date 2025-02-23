@@ -14,7 +14,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-export function DatePickerDemo() {
+export function DatePicker() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -36,7 +36,7 @@ export function DatePickerDemo() {
         <Button
           variant={"outline"}
           className={cn(
-            "w-[280px] justify-start text-left font-normal",
+            "w-[250px] justify-start text-left font-normal",
             !selectedDate && "text-muted-foreground",
           )}
         >
