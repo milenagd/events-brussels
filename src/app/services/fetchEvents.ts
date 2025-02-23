@@ -22,9 +22,10 @@ export type EventType = {
       }[]
     | [];
   dateNext: string;
+  agendaUrl: string;
 };
 
-export const fetchEvents = async (date: string): Promise<EventType[]> => {
+export const fetchEvents = async (date?: string): Promise<EventType[]> => {
   const headers = new Headers();
   headers.append("Accept", "application/json");
   headers.append("Authorization", `Bearer ${process.env.API_ACCESS_TOKEN}`);
@@ -35,7 +36,7 @@ export const fetchEvents = async (date: string): Promise<EventType[]> => {
     redirect: "follow",
   } as RequestInit;
 
-  const newDate = new Date(date) || new Date();
+  const newDate = date ? new Date(date) : new Date();
   const res = await fetch(
     `${process.env.API_URL}/date?date=${format(newDate, "yyyy-MM-dd")}`,
     requestOptions,
@@ -76,6 +77,7 @@ export const adaptEvents = (events: unknown[]): EventType[] => {
             }))
           : [],
       dateNext: item.date_next,
+      agendaUrl: item.translations.en.agenda_url,
     };
   });
   return newData;

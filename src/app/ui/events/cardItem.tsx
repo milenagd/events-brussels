@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Card,
   CardContent,
@@ -8,18 +6,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { EventType } from "@/app/services/fetchEvents";
 
-export default function CardItem(props: { item: unknown }) {
+export default function CardItem(props: { item: EventType }) {
   const { item } = props;
-  const { push } = useRouter();
-  const goToEventPage = (id: number) => {
-    push(`event/${id}`);
-  };
+
   return (
-    <Card>
+    <Card className="max-w-sm min-w-[200px] hover:scale-105 transition-all duration-300">
       <CardHeader>
         <CardDescription>{item.category}</CardDescription>
         <div className="relative w-full aspect-[4/3]">
@@ -35,13 +31,18 @@ export default function CardItem(props: { item: unknown }) {
         </div>
       </CardHeader>
       <CardContent>
-        <CardTitle>{item.media.title}</CardTitle>
+        <CardTitle className="truncate">{item.media.title}</CardTitle>
         <CardDescription>{item.dateNext}</CardDescription>
         <div>{item.place}</div>
       </CardContent>
       <CardFooter>
-        <Button className="w-full" onClick={() => goToEventPage(item.id)}>
-          Go to event
+        <Button asChild className="w-full">
+          <Link
+            href={item.agendaUrl}
+            className={buttonVariants({ variant: "outline" })}
+          >
+            Event info
+          </Link>
         </Button>
       </CardFooter>
     </Card>
